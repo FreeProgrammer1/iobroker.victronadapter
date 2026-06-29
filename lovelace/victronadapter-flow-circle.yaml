@@ -1,0 +1,91 @@
+type: custom:victronadapter-flow-circle
+title: Energiefluss
+subtitle: Victron Adapter
+show_details: true
+transparent_background: true
+show_debug: true
+values:
+  last_update_ms:
+    - sensor.victronadapter_0_dashboard_last_update_ms
+    - victronadapter.0.dashboard.last_update_ms
+  grid_total:
+    - sensor.victronadapter_0_dashboard_grid_total
+    - victronadapter.0.dashboard.grid_total
+  grid_l1:
+    - sensor.victronadapter_0_dashboard_grid_l1
+    - victronadapter.0.dashboard.grid_l1
+  grid_l2:
+    - sensor.victronadapter_0_dashboard_grid_l2
+    - victronadapter.0.dashboard.grid_l2
+  grid_l3:
+    - sensor.victronadapter_0_dashboard_grid_l3
+    - victronadapter.0.dashboard.grid_l3
+  grid_status:
+    - sensor.victronadapter_0_dashboard_grid_status
+    - victronadapter.0.dashboard.grid_status
+  pv_total:
+    - sensor.victronadapter_0_dashboard_pv_total
+    - victronadapter.0.dashboard.pv_total
+  pv_ac:
+    - sensor.victronadapter_0_dashboard_pv_ac
+    - victronadapter.0.dashboard.pv_ac
+  pv_ac_l1:
+    - sensor.victronadapter_0_dashboard_pv_ac_l1
+    - victronadapter.0.dashboard.pv_ac_l1
+  pv_ac_l2:
+    - sensor.victronadapter_0_dashboard_pv_ac_l2
+    - victronadapter.0.dashboard.pv_ac_l2
+  pv_ac_l3:
+    - sensor.victronadapter_0_dashboard_pv_ac_l3
+    - victronadapter.0.dashboard.pv_ac_l3
+  pv_dc:
+    - sensor.victronadapter_0_dashboard_pv_dc
+    - victronadapter.0.dashboard.pv_dc
+  house_total:
+    - sensor.victronadapter_0_dashboard_house_total
+    - victronadapter.0.dashboard.house_total
+  ac_loads_total:
+    - sensor.victronadapter_0_dashboard_ac_loads_total
+    - victronadapter.0.dashboard.ac_loads_total
+  ac_loads_l1:
+    - sensor.victronadapter_0_dashboard_ac_loads_l1
+    - victronadapter.0.dashboard.ac_loads_l1
+  ac_loads_l2:
+    - sensor.victronadapter_0_dashboard_ac_loads_l2
+    - victronadapter.0.dashboard.ac_loads_l2
+  ac_loads_l3:
+    - sensor.victronadapter_0_dashboard_ac_loads_l3
+    - victronadapter.0.dashboard.ac_loads_l3
+  essential_loads_total:
+    - sensor.victronadapter_0_dashboard_essential_loads_total
+    - victronadapter.0.dashboard.essential_loads_total
+  essential_loads_l1:
+    - sensor.victronadapter_0_dashboard_essential_loads_l1
+    - victronadapter.0.dashboard.essential_loads_l1
+  essential_loads_l2:
+    - sensor.victronadapter_0_dashboard_essential_loads_l2
+    - victronadapter.0.dashboard.essential_loads_l2
+  essential_loads_l3:
+    - sensor.victronadapter_0_dashboard_essential_loads_l3
+    - victronadapter.0.dashboard.essential_loads_l3
+  battery_soc:
+    - sensor.victronadapter_0_dashboard_battery_soc
+    - victronadapter.0.dashboard.battery_soc
+  battery_power:
+    - sensor.victronadapter_0_dashboard_battery_power
+    - victronadapter.0.dashboard.battery_power
+  battery_voltage:
+    - sensor.victronadapter_0_dashboard_battery_voltage
+    - victronadapter.0.dashboard.battery_voltage
+  battery_current:
+    - sensor.victronadapter_0_dashboard_battery_current
+    - victronadapter.0.dashboard.battery_current
+  battery_temperature:
+    - sensor.victronadapter_0_dashboard_battery_temperature
+    - victronadapter.0.dashboard.battery_temperature
+  battery_status:
+    - sensor.victronadapter_0_dashboard_battery_status
+    - victronadapter.0.dashboard.battery_status
+  surplus:
+    - sensor.victronadapter_0_dashboard_surplus
+    - victronadapter.0.dashboard.surplus
