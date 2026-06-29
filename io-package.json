@@ -1,0 +1,131 @@
+{
+  "common": {
+    "name": "victronadapter",
+    "version": "0.6.2",
+    "titleLang": {
+      "en": "Victron Adapter",
+      "de": "Victron Adapter",
+      "ru": "Victron Adapter",
+      "pt": "Victron Adapter",
+      "nl": "Victron Adapter",
+      "fr": "Victron Adapter",
+      "it": "Victron Adapter",
+      "es": "Victron Adapter",
+      "pl": "Victron Adapter",
+      "uk": "Victron Adapter",
+      "zh-cn": "Victron Adapter"
+    },
+    "desc": {
+      "en": "Adapter for Victron GX/Cerbo GX systems via Modbus TCP with dashboard states, controls, device discovery and clean Lovelace energy cards.",
+      "de": "Adapter für Victron GX/Cerbo-GX-Systeme per Modbus TCP mit Dashboard-Datenpunkten, Steuerung, Gerätesuche und bereinigten Lovelace-Energiekarten.",
+      "ru": "Адаптер для систем Victron GX/Cerbo GX через Modbus TCP с состояниями панели, управлением, поиском устройств и чистыми картами Lovelace.",
+      "pt": "Adaptador para sistemas Victron GX/Cerbo GX via Modbus TCP com estados de painel, controle, descoberta e cartões Lovelace limpos.",
+      "nl": "Adapter voor Victron GX/Cerbo GX-systemen via Modbus TCP met dashboard-states, bediening, detectie en opgeschoonde Lovelace-kaarten.",
+      "fr": "Adaptateur pour systèmes Victron GX/Cerbo GX via Modbus TCP avec états, contrôle, découverte et cartes Lovelace nettoyées.",
+      "it": "Adattatore per sistemi Victron GX/Cerbo GX via Modbus TCP con stati dashboard, controllo, rilevamento e schede Lovelace pulite.",
+      "es": "Adaptador para sistemas Victron GX/Cerbo GX mediante Modbus TCP con estados, control, detección y tarjetas Lovelace limpias.",
+      "pl": "Adapter do systemów Victron GX/Cerbo GX przez Modbus TCP ze stanami pulpitu, sterowaniem, wykrywaniem i czystymi kartami Lovelace.",
+      "uk": "Адаптер для систем Victron GX/Cerbo GX через Modbus TCP зі станами, керуванням, виявленням і чистими картами Lovelace.",
+      "zh-cn": "通过 Modbus TCP 连接 Victron GX/Cerbo GX 系统的适配器，包含仪表板状态、控制、发现和简洁的 Lovelace 能源卡。"
+    },
+    "authors": [
+      "Geht Euch <gehteuchnichtsanandroid56@gmail.com>"
+    ],
+    "keywords": [
+      "victron",
+      "cerbo",
+      "gx",
+      "modbus",
+      "energy",
+      "ess",
+      "pv",
+      "battery",
+      "victronadapter",
+      "iobroker"
+    ],
+    "platform": "Javascript/Node.js",
+    "mode": "daemon",
+    "icon": "victronadapter.svg",
+    "enabled": false,
+    "extIcon": "https://raw.githubusercontent.com/gehteuchnichtsanandroid56/ioBroker.VictronAdapter/main/admin/victronadapter.svg",
+    "readme": "https://github.com/gehteuchnichtsanandroid56/ioBroker.VictronAdapter/blob/main/README.md",
+    "loglevel": "info",
+    "type": "energy",
+    "compact": true,
+    "connectionType": "local",
+    "dataSource": "poll",
+    "adminUI": {
+      "config": "json"
+    },
+    "supportStopInstance": true,
+    "dependencies": [
+      {
+        "js-controller": ">=6.0.11"
+      }
+    ],
+    "globalDependencies": [
+      {
+        "admin": ">=6.17.14"
+      }
+    ],
+    "news": {
+      "0.6.2": {
+        "en": "Fixes the circular Lovelace card: it now shows real circular nodes, animated flow direction indicators and uses only existing dashboard states.",
+        "de": "Korrigiert die Lovelace-Kreis-Karte: Sie zeigt jetzt echte runde Knoten, animierte Richtungsanzeigen und nutzt nur vorhandene dashboard-Datenpunkte."
+      }
+    },
+    "licenseInformation": {
+      "license": "MIT",
+      "type": "free"
+    },
+    "tier": 3,
+    "title": "Victron Adapter",
+    "license": "MIT"
+  },
+  "native": {
+    "host": "192.168.0.50",
+    "port": 502,
+    "pollInterval": 2000,
+    "timeout": 3000,
+    "unitIdSystem": 100,
+    "enableDeviceScan": true,
+    "scanFrom": 223,
+    "scanTo": 247,
+    "scanInterval": 300000,
+    "allowWrites": false,
+    "controlUnitId": 100,
+    "useNewSetpoint": true,
+    "legacySetpointEnabled": false,
+    "autoCreateRawWriteObjects": true,
+    "writeSafetyMinW": -30000,
+    "writeSafetyMaxW": 30000,
+    "installLovelaceCard": true,
+    "lovelaceInstance": "lovelace.0",
+    "restartLovelaceAfterCardInstall": true,
+    "scanUnitIds": "100,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,247"
+  },
+  "objects": [],
+  "instanceObjects": [
+    {
+      "_id": "info",
+      "type": "channel",
+      "common": {
+        "name": "Information"
+      },
+      "native": {}
+    },
+    {
+      "_id": "info.connection",
+      "type": "state",
+      "common": {
+        "role": "indicator.connected",
+        "name": "Connection to Victron GX Modbus TCP",
+        "type": "boolean",
+        "read": true,
+        "write": false,
+        "def": false
+      },
+      "native": {}
+    }
+  ]
+}

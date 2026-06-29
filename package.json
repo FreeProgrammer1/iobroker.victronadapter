@@ -1,0 +1,63 @@
+{
+  "name": "iobroker.victronadapter",
+  "version": "0.6.2",
+  "description": "ioBroker adapter for Victron GX/Cerbo GX with fixed circular Lovelace energy flow view.",
+  "author": "Geht Euch <gehteuchnichtsanandroid56@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/gehteuchnichtsanandroid56/ioBroker.VictronAdapter#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gehteuchnichtsanandroid56/ioBroker.VictronAdapter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gehteuchnichtsanandroid56/ioBroker.VictronAdapter/issues"
+  },
+  "keywords": [
+    "adapter",
+    "battery",
+    "cerbo",
+    "energy",
+    "ess",
+    "gx",
+    "ioBroker",
+    "iobroker",
+    "lovelace",
+    "modbus",
+    "modbus-tcp",
+    "pv",
+    "victron",
+    "victronadapter"
+  ],
+  "main": "main.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node main.js",
+    "test": "npm run test:js && npm run test:unit && npm run test:package",
+    "test:js": "node --check main.js && node --check lib/modbusClient.js && node --check lib/registerMap.js && node --check lovelace/victronadapter-card.js",
+    "test:unit": "node --test test/*.test.js",
+    "test:integration": "node -e \"console.log('No integration tests required for local Modbus adapter metadata check')\"",
+    "test:package": "npm pack --dry-run",
+    "adapter-check": "npx --yes @iobroker/repochecker https://github.com/gehteuchnichtsanandroid56/ioBroker.VictronAdapter --local",
+    "check": "npm run test && npm run adapter-check"
+  },
+  "dependencies": {
+    "@iobroker/adapter-core": "^3.3.2"
+  },
+  "devDependencies": {
+    "@iobroker/repochecker": "^5.19.4",
+    "@iobroker/testing": "^5.2.2"
+  },
+  "files": [
+    "admin",
+    "lib",
+    "lovelace",
+    "main.js",
+    "io-package.json",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "readmeFilename": "README.md"
+}
