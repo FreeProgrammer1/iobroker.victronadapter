@@ -1,21 +1,20 @@
-# ioBroker.VictronAdapter
+# ioBroker.victronadapter
 
 Adapter for Victron GX and Cerbo GX systems via Modbus TCP.
 
 ## Important repository note
 
-This package matches the repository URL reported by the checker:
+This source package is prepared for this repository name:
 
 ```text
-https://github.com/FreeProgrammer1/iobroker.VictronAdapter
+https://github.com/FreeProgrammer1/ioBroker.victronadapter
 ```
 
-For a fully clean repository check, GitHub must also be configured outside the source tree:
+The technical ioBroker adapter name remains lowercase:
 
-- add repository topics in GitHub settings
-- create and push tag `v0.6.4`
-- create a GitHub release for `v0.6.4`
-- publish the npm package if the adapter should be found by npm/repository checks
+```text
+victronadapter
+```
 
 ## Features
 
@@ -90,16 +89,17 @@ npm run adapter-check
 
 ## Changelog
 
-### 0.6.4
+### 0.6.5
 
-- Added checker-compatible repository metadata for the reported repository URL.
-- Added ESLint and Prettier config files required by the checker.
+- Fixed package name back to lowercase `iobroker.victronadapter`.
+- Fixed repository metadata to `ioBroker.victronadapter`.
+- Removed invalid JSONConfig responsive root attributes.
+- Updated `@iobroker/adapter-dev` to `^1.5.0`.
 - Updated translations to avoid identical English fallback entries.
-- Updated GitHub workflow with lint enabled.
-- Added `.github/auto-merge.yml`.
-- Updated dependency metadata.
-- Removed obsolete ignore/changelog files from the packaged source.
+- Removed obsolete ignore/changelog files from the npm package.
 - Kept adapter behavior unchanged.
+
+Older entries are stored in [CHANGELOG_OLD.md](CHANGELOG_OLD.md).
 
 ## License
 

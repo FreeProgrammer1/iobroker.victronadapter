@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "victronadapter",
-    "version": "0.6.4",
+    "version": "0.6.5",
     "titleLang": {
       "en": "Victron",
       "de": "Victron",
@@ -46,8 +46,8 @@
     "mode": "daemon",
     "icon": "victronadapter.svg",
     "enabled": false,
-    "extIcon": "https://raw.githubusercontent.com/FreeProgrammer1/iobroker.VictronAdapter/main/admin/victronadapter.svg",
-    "readme": "https://github.com/FreeProgrammer1/iobroker.VictronAdapter/blob/main/README.md",
+    "extIcon": "https://raw.githubusercontent.com/FreeProgrammer1/ioBroker.victronadapter/main/admin/victronadapter.svg",
+    "readme": "https://github.com/FreeProgrammer1/ioBroker.victronadapter/blob/main/README.md",
     "loglevel": "info",
     "type": "energy",
     "compact": true,
@@ -68,18 +68,18 @@
       }
     ],
     "news": {
-      "0.6.4": {
-        "en": "Fixes ioBroker checker metadata, lint configuration, translations and workflow files.",
-        "de": "Korrigiert ioBroker-Checker-Metadaten, Lint-Konfiguration, Übersetzungen und Workflow-Dateien.",
-        "ru": "Исправлены метаданные проверки ioBroker, конфигурация lint, переводы и файлы workflow.",
-        "pt": "Corrige metadados do verificador ioBroker, configuração lint, traduções e workflows.",
-        "nl": "Corrigeert ioBroker-checkermetadata, lint-configuratie, vertalingen en workflowbestanden.",
-        "fr": "Corrige les métadonnées du vérificateur ioBroker, la configuration lint, les traductions et les workflows.",
-        "it": "Corregge metadati del checker ioBroker, configurazione lint, traduzioni e workflow.",
-        "es": "Corrige metadatos del verificador ioBroker, configuración lint, traducciones y workflows.",
-        "pl": "Poprawia metadane sprawdzania ioBroker, konfigurację lint, tłumaczenia i workflow.",
-        "uk": "Виправлено метадані перевірки ioBroker, конфігурацію lint, переклади та workflow.",
-        "zh-cn": "修正 ioBroker 检查元数据、lint 配置、翻译和工作流文件。"
+      "0.6.5": {
+        "en": "Fixes checker issues for repository naming, package naming, JSONConfig schema, translations and dev dependencies.",
+        "de": "Korrigiert Checker-Probleme bei Repository-Name, Paketname, JSONConfig-Schema, Übersetzungen und Entwicklungsabhängigkeiten.",
+        "ru": "Исправлены проблемы проверки имени репозитория, имени пакета, схемы JSONConfig, переводов и зависимостей разработки.",
+        "pt": "Corrige problemas de verificação do nome do repositório, nome do pacote, esquema JSONConfig, traduções e dependências de desenvolvimento.",
+        "nl": "Corrigeert checkerproblemen met repositorynaam, pakketnaam, JSONConfig-schema, vertalingen en ontwikkelafhankelijkheden.",
+        "fr": "Corrige les problèmes de vérification du nom du dépôt, du paquet, du schéma JSONConfig, des traductions et des dépendances de développement.",
+        "it": "Corregge problemi di controllo per nome repository, nome pacchetto, schema JSONConfig, traduzioni e dipendenze di sviluppo.",
+        "es": "Corrige problemas de verificación del nombre del repositorio, nombre del paquete, esquema JSONConfig, traducciones y dependencias de desarrollo.",
+        "pl": "Poprawia problemy sprawdzania nazwy repozytorium, nazwy pakietu, schematu JSONConfig, tłumaczeń i zależności deweloperskich.",
+        "uk": "Виправлено проблеми перевірки назви репозиторію, назви пакета, схеми JSONConfig, перекладів і залежностей розробки.",
+        "zh-cn": "修正仓库名称、包名称、JSONConfig 架构、翻译和开发依赖项的检查问题。"
       }
     },
     "licenseInformation": {

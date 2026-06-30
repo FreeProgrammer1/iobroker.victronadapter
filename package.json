@@ -1,16 +1,16 @@
 {
-  "name": "iobroker.VictronAdapter",
-  "version": "0.6.4",
+  "name": "iobroker.victronadapter",
+  "version": "0.6.5",
   "description": "ioBroker adapter for Victron GX and Cerbo GX systems via Modbus TCP.",
   "author": "FreeProgrammer1",
   "license": "MIT",
-  "homepage": "https://github.com/FreeProgrammer1/iobroker.VictronAdapter#readme",
+  "homepage": "https://github.com/FreeProgrammer1/ioBroker.victronadapter#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/FreeProgrammer1/iobroker.VictronAdapter.git"
+    "url": "https://github.com/FreeProgrammer1/ioBroker.victronadapter.git"
   },
   "bugs": {
-    "url": "https://github.com/FreeProgrammer1/iobroker.VictronAdapter/issues"
+    "url": "https://github.com/FreeProgrammer1/ioBroker.victronadapter/issues"
   },
   "keywords": [
     "ioBroker",
@@ -36,13 +36,13 @@
     "test:unit": "node --test test/*.test.js",
     "test:package": "npm pack --dry-run",
     "lint": "eslint .",
-    "adapter-check": "npx --yes @iobroker/repochecker https://github.com/FreeProgrammer1/iobroker.VictronAdapter --local"
+    "adapter-check": "npx --yes @iobroker/repochecker https://github.com/FreeProgrammer1/ioBroker.victronadapter --local"
   },
   "dependencies": {
     "@iobroker/adapter-core": "^3.4.1"
   },
   "devDependencies": {
-    "@iobroker/adapter-dev": "^1.0.1",
+    "@iobroker/adapter-dev": "^1.5.0",
     "@iobroker/eslint-config": "^2.3.4",
     "@iobroker/testing": "^5.2.2",
     "@tsconfig/node22": "^22.0.5",
@@ -60,7 +60,6 @@
     "LICENSE",
     "tsconfig.json",
     "eslint.config.mjs",
-    "prettier.config.mjs",
-    "CHANGELOG_OLD.md"
+    "prettier.config.mjs"
   ]
 }
