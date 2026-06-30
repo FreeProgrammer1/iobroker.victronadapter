@@ -1,6 +1,6 @@
 {
   "name": "iobroker.victronadapter",
-  "version": "0.6.5",
+  "version": "0.6.6",
   "description": "ioBroker adapter for Victron GX and Cerbo GX systems via Modbus TCP.",
   "author": "FreeProgrammer1",
   "license": "MIT",
