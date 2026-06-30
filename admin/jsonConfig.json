@@ -9,28 +9,44 @@
         "_info1": {
           "type": "staticText",
           "text": "Trage nur die IP-Adresse deines Cerbo GX / Venus OS / GX-Geräts und den Modbus-TCP-Port ein. Auf dem GX-Gerät muss Modbus TCP aktiviert sein.",
-          "sm": 12
+          "sm": 12,
+          "xs": 12,
+          "md": 12,
+          "lg": 12,
+          "xl": 12
         },
         "host": {
           "type": "text",
           "label": "GX IP-Adresse / Hostname",
           "help": "Beispiel: 192.168.50.91 - keine Leerzeichen eingeben",
           "validator": "!!data.host && !/\\s/.test(data.host)",
-          "sm": 6
+          "sm": 6,
+          "xs": 12,
+          "md": 6,
+          "lg": 6,
+          "xl": 6
         },
         "port": {
           "type": "port",
           "label": "Modbus TCP Port",
           "min": 1,
           "max": 65535,
-          "sm": 3
+          "sm": 3,
+          "xs": 12,
+          "md": 3,
+          "lg": 3,
+          "xl": 3
         },
         "timeout": {
           "type": "number",
           "label": "Timeout je Anfrage (ms)",
           "min": 500,
           "max": 30000,
-          "sm": 3
+          "sm": 3,
+          "xs": 12,
+          "md": 3,
+          "lg": 3,
+          "xl": 3
         },
         "unitIdSystem": {
           "type": "number",
@@ -38,7 +54,11 @@
           "help": "Für com.victronenergy.system normalerweise 100.",
           "min": 0,
           "max": 255,
-          "sm": 3
+          "sm": 3,
+          "xs": 12,
+          "md": 3,
+          "lg": 3,
+          "xl": 3
         },
         "pollInterval": {
           "type": "number",
@@ -46,9 +66,17 @@
           "help": "Für die Lovelace-Liveansicht sind 1000 bis 2000 ms sinnvoll. Höhere Werte wirken sichtbar träge.",
           "min": 1000,
           "max": 600000,
-          "sm": 3
+          "sm": 3,
+          "xs": 12,
+          "md": 3,
+          "lg": 3,
+          "xl": 3
         }
-      }
+      },
+      "xs": 12,
+      "md": 12,
+      "lg": 12,
+      "xl": 12
     },
     "scan": {
       "type": "panel",
@@ -57,7 +85,11 @@
         "enableDeviceScan": {
           "type": "checkbox",
           "label": "Angeschlossene Victron-Dienste automatisch suchen",
-          "sm": 12
+          "sm": 12,
+          "xs": 12,
+          "md": 12,
+          "lg": 12,
+          "xl": 12
         },
         "scanUnitIds": {
           "type": "text",
@@ -65,7 +97,11 @@
           "help": "Kommagetrennt eintragen, z. B. 100,223,224,225,226,227,228,229,230,245,246,247. Die System-Unit-ID und Steuer-Unit-ID werden zusätzlich automatisch berücksichtigt.",
           "validator": "!!data.scanUnitIds && /^\\s*\\d{1,3}(\\s*,\\s*\\d{1,3})*\\s*$/.test(data.scanUnitIds)",
           "sm": 8,
-          "hidden": "!data.enableDeviceScan"
+          "hidden": "!data.enableDeviceScan",
+          "xs": 12,
+          "md": 8,
+          "lg": 8,
+          "xl": 8
         },
         "scanInterval": {
           "type": "number",
@@ -73,14 +109,26 @@
           "min": 60000,
           "max": 3600000,
           "sm": 4,
-          "hidden": "!data.enableDeviceScan"
+          "hidden": "!data.enableDeviceScan",
+          "xs": 12,
+          "md": 4,
+          "lg": 4,
+          "xl": 4
         },
         "_scanHelp": {
           "type": "staticText",
           "text": "Hinweis: Die echten Unit-IDs siehst du am GX-Gerät unter Einstellungen → Integrationen/Services → Modbus TCP → Verfügbare Dienste. Die Suche versucht bekannte Registerbereiche automatisch zu erkennen.",
-          "sm": 12
+          "sm": 12,
+          "xs": 12,
+          "md": 12,
+          "lg": 12,
+          "xl": 12
         }
-      }
+      },
+      "xs": 12,
+      "md": 12,
+      "lg": 12,
+      "xl": 12
     },
     "lovelace": {
       "type": "panel",
@@ -89,28 +137,48 @@
         "_lovelaceInfo": {
           "type": "staticText",
           "text": "Die Victron-Adapter-Energieflusskarte wird automatisch als Custom Card in den Lovelace-Adapter kopiert. Danach soll sie in Lovelace als Karte „Victron Energiefluss“ auswählbar sein.",
-          "sm": 12
+          "sm": 12,
+          "xs": 12,
+          "md": 12,
+          "lg": 12,
+          "xl": 12
         },
         "installLovelaceCard": {
           "type": "checkbox",
           "label": "Victron Adapter Lovelace-Karte automatisch installieren",
-          "sm": 12
+          "sm": 12,
+          "xs": 12,
+          "md": 12,
+          "lg": 12,
+          "xl": 12
         },
         "lovelaceInstance": {
           "type": "text",
           "label": "Lovelace Instanz",
           "help": "Normalerweise lovelace.0",
           "sm": 6,
-          "hidden": "!data.installLovelaceCard"
+          "hidden": "!data.installLovelaceCard",
+          "xs": 12,
+          "md": 6,
+          "lg": 6,
+          "xl": 6
         },
         "restartLovelaceAfterCardInstall": {
           "type": "checkbox",
           "label": "Lovelace nach Karten-Update automatisch neu starten",
           "help": "Lovelace lädt Custom Cards laut Adapter-Dokumentation nach einem Neustart aus dem cards-Ordner. Der Neustart erfolgt nur, wenn die Karte neu oder geändert ist.",
           "sm": 6,
-          "hidden": "!data.installLovelaceCard"
+          "hidden": "!data.installLovelaceCard",
+          "xs": 12,
+          "md": 6,
+          "lg": 6,
+          "xl": 6
         }
-      }
+      },
+      "xs": 12,
+      "md": 12,
+      "lg": 12,
+      "xl": 12
     },
     "control": {
       "type": "panel",
@@ -119,12 +187,20 @@
         "_warn": {
           "type": "staticText",
           "text": "Schreiben ist aus Sicherheitsgründen standardmäßig deaktiviert. Erst aktivieren, wenn du die ESS-Register und die Wirkung auf deine Anlage verstanden hast.",
-          "sm": 12
+          "sm": 12,
+          "xs": 12,
+          "md": 12,
+          "lg": 12,
+          "xl": 12
         },
         "allowWrites": {
           "type": "checkbox",
           "label": "Schreib-/Steuerbefehle erlauben",
-          "sm": 12
+          "sm": 12,
+          "xs": 12,
+          "md": 12,
+          "lg": 12,
+          "xl": 12
         },
         "controlUnitId": {
           "type": "number",
@@ -132,38 +208,70 @@
           "help": "Für ESS Mode 2 normalerweise 100. Für VE.Bus Mode 3 kann je nach GX-Gerät eine VE.Bus Unit-ID nötig sein.",
           "min": 0,
           "max": 255,
-          "sm": 4
+          "sm": 4,
+          "xs": 12,
+          "md": 4,
+          "lg": 4,
+          "xl": 4
         },
         "useNewSetpoint": {
           "type": "checkbox",
           "label": "Neuen 32-Bit Grid-Setpoint 2716/2717 verwenden",
-          "sm": 8
+          "sm": 8,
+          "xs": 12,
+          "md": 8,
+          "lg": 8,
+          "xl": 8
         },
         "legacySetpointEnabled": {
           "type": "checkbox",
           "label": "Legacy Grid-Setpoint 2700 zusätzlich anlegen",
-          "sm": 12
+          "sm": 12,
+          "xs": 12,
+          "md": 12,
+          "lg": 12,
+          "xl": 12
         },
         "writeSafetyMinW": {
           "type": "number",
           "label": "Minimal erlaubter Setpoint (W)",
           "min": -1000000,
           "max": 0,
-          "sm": 6
+          "sm": 6,
+          "xs": 12,
+          "md": 6,
+          "lg": 6,
+          "xl": 6
         },
         "writeSafetyMaxW": {
           "type": "number",
           "label": "Maximal erlaubter Setpoint (W)",
           "min": 0,
           "max": 1000000,
-          "sm": 6
+          "sm": 6,
+          "xs": 12,
+          "md": 6,
+          "lg": 6,
+          "xl": 6
         },
         "autoCreateRawWriteObjects": {
           "type": "checkbox",
           "label": "Raw-Schreibkanal für Tests anlegen",
-          "sm": 12
+          "sm": 12,
+          "xs": 12,
+          "md": 12,
+          "lg": 12,
+          "xl": 12
         }
-      }
+      },
+      "xs": 12,
+      "md": 12,
+      "lg": 12,
+      "xl": 12
     }
-  }
+  },
+  "xs": 12,
+  "md": 12,
+  "lg": 12,
+  "xl": 12
 }
