@@ -1,0 +1,23 @@
+{
+  "Verbindung": "Verbindung",
+  "Automatische Suche": "Automatische Suche",
+  "Steuerung": "Steuerung",
+  "GX IP-Adresse / Hostname": "GX IP-Adresse / Hostname",
+  "Modbus TCP Port": "Modbus TCP Port",
+  "Timeout je Anfrage (ms)": "Timeout je Anfrage (ms)",
+  "System Unit-ID": "System Unit-ID",
+  "Abfrageintervall (ms)": "Abfrageintervall (ms)",
+  "Angeschlossene Victron-Dienste automatisch suchen": "Angeschlossene Victron-Dienste automatisch suchen",
+  "Unit-ID Suche von": "Unit-ID Suche von",
+  "Unit-ID Suche bis": "Unit-ID Suche bis",
+  "Suchintervall (ms)": "Suchintervall (ms)",
+  "Schreib-/Steuerbefehle erlauben": "Schreib-/Steuerbefehle erlauben",
+  "Steuer Unit-ID": "Steuer Unit-ID",
+  "Neuen 32-Bit Grid-Setpoint 2716/2717 verwenden": "Neuen 32-Bit Grid-Setpoint 2716/2717 verwenden",
+  "Legacy Grid-Setpoint 2700 zusätzlich anlegen": "Legacy Grid-Setpoint 2700 zusätzlich anlegen",
+  "Minimal erlaubter Setpoint (W)": "Minimal erlaubter Setpoint (W)",
+  "Maximal erlaubter Setpoint (W)": "Maximal erlaubter Setpoint (W)",
+  "Raw-Schreibkanal für Tests anlegen": "Raw-Schreibkanal für Tests anlegen",
+  "Unit-IDs für Suche": "Unit-IDs für Suche",
+  "Kommagetrennt eintragen, z. B. 100,223,224,225,226,227,228,229,230,245,246,247. Die System-Unit-ID und Steuer-Unit-ID werden zusätzlich automatisch berücksichtigt.": "Kommagetrennt eintragen, z. B. 100,223,224,225,226,227,228,229,230,245,246,247. Die System-Unit-ID und Steuer-Unit-ID werden zusätzlich automatisch berücksichtigt."
+}
