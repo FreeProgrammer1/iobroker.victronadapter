@@ -1,7 +1,7 @@
 {
   "name": "iobroker.victronadapter",
-  "version": "0.6.6",
-  "description": "ioBroker adapter for Victron GX and Cerbo GX systems via Modbus TCP.",
+  "version": "0.6.7",
+  "description": "ioBroker adapter for Victron GX and Cerbo GX systems via Modbus TCP with fixed Modbus timer handling.",
   "author": "FreeProgrammer1",
   "license": "MIT",
   "homepage": "https://github.com/FreeProgrammer1/ioBroker.victronadapter#readme",

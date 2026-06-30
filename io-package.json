@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "victronadapter",
-    "version": "0.6.5",
+    "version": "0.6.7",
     "titleLang": {
       "en": "Victron",
       "de": "Victron",
@@ -68,18 +68,31 @@
       }
     ],
     "news": {
-      "0.6.5": {
-        "en": "Fixes checker issues for repository naming, package naming, JSONConfig schema, translations and dev dependencies.",
-        "de": "Korrigiert Checker-Probleme bei Repository-Name, Paketname, JSONConfig-Schema, Übersetzungen und Entwicklungsabhängigkeiten.",
-        "ru": "Исправлены проблемы проверки имени репозитория, имени пакета, схемы JSONConfig, переводов и зависимостей разработки.",
-        "pt": "Corrige problemas de verificação do nome do repositório, nome do pacote, esquema JSONConfig, traduções e dependências de desenvolvimento.",
-        "nl": "Corrigeert checkerproblemen met repositorynaam, pakketnaam, JSONConfig-schema, vertalingen en ontwikkelafhankelijkheden.",
-        "fr": "Corrige les problèmes de vérification du nom du dépôt, du paquet, du schéma JSONConfig, des traductions et des dépendances de développement.",
-        "it": "Corregge problemi di controllo per nome repository, nome pacchetto, schema JSONConfig, traduzioni e dipendenze di sviluppo.",
-        "es": "Corrige problemas de verificación del nombre del repositorio, nombre del paquete, esquema JSONConfig, traducciones y dependencias de desarrollo.",
-        "pl": "Poprawia problemy sprawdzania nazwy repozytorium, nazwy pakietu, schematu JSONConfig, tłumaczeń i zależności deweloperskich.",
-        "uk": "Виправлено проблеми перевірки назви репозиторію, назви пакета, схеми JSONConfig, перекладів і залежностей розробки.",
-        "zh-cn": "修正仓库名称、包名称、JSONConfig 架构、翻译和开发依赖项的检查问题。"
+      "0.6.7": {
+        "en": "Fixes a crash on successful Modbus TCP connect under Node.js 22 by correcting timer cleanup in the Modbus client.",
+        "de": "Behebt einen Absturz nach erfolgreicher Modbus-TCP-Verbindung unter Node.js 22 durch korrigierte Timer-Bereinigung im Modbus-Client.",
+        "ru": "Исправлен сбой после успешного подключения Modbus TCP в Node.js 22 за счет корректной очистки таймеров.",
+        "pt": "Corrige uma falha após conexão Modbus TCP bem-sucedida no Node.js 22 ao ajustar a limpeza dos temporizadores.",
+        "nl": "Verhelpt een crash na een succesvolle Modbus TCP-verbinding onder Node.js 22 door timeropruiming te corrigeren.",
+        "fr": "Corrige un plantage après une connexion Modbus TCP réussie sous Node.js 22 grâce à une gestion correcte des temporisateurs.",
+        "it": "Corregge un arresto dopo la connessione Modbus TCP riuscita con Node.js 22 sistemando la pulizia dei timer.",
+        "es": "Corrige un bloqueo tras una conexión Modbus TCP correcta en Node.js 22 ajustando la limpieza de temporizadores.",
+        "pl": "Naprawia awarię po udanym połączeniu Modbus TCP w Node.js 22 przez poprawienie czyszczenia timerów.",
+        "uk": "Виправлено збій після успішного підключення Modbus TCP у Node.js 22 завдяки коректному очищенню таймерів.",
+        "zh-cn": "修复了 Node.js 22 下 Modbus TCP 成功连接后因定时器清理错误导致的崩溃。"
+      },
+      "0.6.6": {
+        "en": "Clean release package without stale repository files and with corrected checker metadata.",
+        "de": "Sauberes Release-Paket ohne alte Repository-Dateien und mit korrigierten Checker-Metadaten.",
+        "ru": "Чистый релизный пакет без устаревших файлов репозитория и с исправленными метаданными проверки.",
+        "pt": "Pacote de lançamento limpo sem arquivos antigos do repositório e com metadados de verificação corrigidos.",
+        "nl": "Schone release zonder oude repositorybestanden en met gecorrigeerde checker-metadata.",
+        "fr": "Version propre sans anciens fichiers du dépôt et avec métadonnées de vérification corrigées.",
+        "it": "Pacchetto di rilascio pulito senza vecchi file repository e con metadati checker corretti.",
+        "es": "Paquete limpio sin archivos antiguos del repositorio y con metadatos de comprobación corregidos.",
+        "pl": "Czyste wydanie bez starych plików repozytorium i z poprawionymi metadanymi sprawdzania.",
+        "uk": "Чистий релізний пакет без старих файлів репозиторію та з виправленими метаданими перевірки.",
+        "zh-cn": "干净的发布包，不含旧仓库文件，并修正检查元数据。"
       }
     },
     "licenseInformation": {

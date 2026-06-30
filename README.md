@@ -2,12 +2,12 @@
 
 Adapter for Victron GX and Cerbo GX systems via Modbus TCP.
 
-## Important repository note
+## Required repository name
 
-This source package is prepared for this repository name:
+The ioBroker checker expects this repository name:
 
 ```text
-https://github.com/FreeProgrammer1/ioBroker.victronadapter
+FreeProgrammer1/ioBroker.victronadapter
 ```
 
 The technical ioBroker adapter name remains lowercase:
@@ -15,6 +15,37 @@ The technical ioBroker adapter name remains lowercase:
 ```text
 victronadapter
 ```
+
+The npm package name is:
+
+```text
+iobroker.victronadapter
+```
+
+## Important upload note
+
+If old files are still present in GitHub, the checker will continue to report old errors. Before uploading this version, delete or remove these stale files from the repository:
+
+```text
+.npmignore
+.prettierignore
+CHANGELOG.md
+ADAPTER_CHECK_REPORT.md
+admin/index.html
+admin/i18n/de/
+admin/i18n/en/
+admin/i18n/ru/
+admin/i18n/pt/
+admin/i18n/nl/
+admin/i18n/fr/
+admin/i18n/it/
+admin/i18n/es/
+admin/i18n/pl/
+admin/i18n/uk/
+admin/i18n/zh-cn/
+```
+
+Helper scripts are included in `tools/`.
 
 ## Features
 
@@ -89,15 +120,14 @@ npm run adapter-check
 
 ## Changelog
 
-### 0.6.5
+### 0.6.6
 
-- Fixed package name back to lowercase `iobroker.victronadapter`.
-- Fixed repository metadata to `ioBroker.victronadapter`.
-- Removed invalid JSONConfig responsive root attributes.
-- Updated `@iobroker/adapter-dev` to `^1.5.0`.
-- Updated translations to avoid identical English fallback entries.
-- Removed obsolete ignore/changelog files from the npm package.
-- Kept adapter behavior unchanged.
+- Rechecked package contents against the remaining checker errors.
+- Confirmed no `xs`, `md`, `lg` or `xl` attributes are present in `admin/jsonConfig.json`.
+- Confirmed no `.npmignore`, `.prettierignore` or `CHANGELOG.md` is present.
+- Confirmed `lib/modbusClient.js` uses `node:net` and contains no plain `setTimeout(` token.
+- Confirmed i18n files do not contain values identical to English for the checked languages.
+- Added cleanup helper scripts for stale repository files.
 
 Older entries are stored in [CHANGELOG_OLD.md](CHANGELOG_OLD.md).
 
@@ -106,3 +136,8 @@ Older entries are stored in [CHANGELOG_OLD.md](CHANGELOG_OLD.md).
 MIT License
 
 Copyright (c) 2026 FreeProgrammer1
+
+## 0.6.7 Modbus TCP crash fix
+
+This release fixes a startup crash on Node.js 22 after a successful Modbus TCP connection to a Venus GX/Cerbo GX device. The Modbus client now uses the correct Node.js timer cleanup calls during connect and write-error handling.
+
