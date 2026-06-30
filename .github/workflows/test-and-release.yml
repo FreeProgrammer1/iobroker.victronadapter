@@ -22,6 +22,7 @@ jobs:
         with:
           node-version: "24.x"
           install-command: "npm install"
+          lint: true
 
   adapter-tests:
     needs: check-and-lint
