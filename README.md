@@ -22,6 +22,10 @@ The npm package name is:
 iobroker.victronadapter
 ```
 
+## GitHub upload note
+
+This GitHub-ready package is already cleaned for the repository checker. Upload the extracted contents of this folder to GitHub, not the generated `.tgz` installation package. The repository root should directly contain `package.json`, `io-package.json`, `main.js`, `admin/`, `lib/`, `lovelace/`, `test/` and `.github/`.
+
 ## Features
 
 - Reads Victron GX and Cerbo GX systems via Modbus TCP

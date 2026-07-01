@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "victronadapter",
-    "version": "0.6.7",
+    "version": "0.6.8",
     "titleLang": {
       "en": "Victron",
       "de": "Victron",
@@ -68,6 +68,19 @@
       }
     ],
     "news": {
+      "0.6.8": {
+        "en": "Adds robust Unit-ID scan handling: debug summary per checked Unit-ID, per-unit timeout/error handling, continued scans after non-responsive IDs and clean cancellation of active scans/polls during adapter unload.",
+        "de": "Ergänzt eine robuste Unit-ID-Suche: Debug-Zusammenfassung je geprüfter Unit-ID, sauberes Timeout-/Fehlerhandling pro Unit-ID, Weiterscannen nach nicht antwortenden IDs und sauberes Abbrechen laufender Scans/Polls beim Adapter-Unload.",
+        "ru": "Добавлена надежная обработка поиска Unit-ID: отладочная сводка по каждому Unit-ID, обработка тайм-аутов/ошибок, продолжение после неотвечающих ID и корректная отмена сканирования/опроса при остановке адаптера.",
+        "pt": "Adiciona varredura Unit-ID robusta: resumo de depuração por Unit-ID verificado, tratamento de timeout/erro por unidade, continuação após IDs sem resposta e cancelamento limpo de scans/polls no unload do adaptador.",
+        "nl": "Voegt robuuste Unit-ID-scan toe: debugsamenvatting per gecontroleerde Unit-ID, timeout-/foutafhandeling per unit, doorgaan na niet-reagerende IDs en nette annulering van scans/polls bij unload.",
+        "fr": "Ajoute une recherche Unit-ID robuste : résumé debug par Unit-ID, gestion des délais/erreurs par unité, poursuite après ID sans réponse et annulation propre des scans/polls à l’arrêt.",
+        "it": "Aggiunge una scansione Unit-ID robusta: riepilogo debug per Unit-ID controllato, gestione timeout/errori per unità, continuazione dopo ID non rispondenti e annullamento pulito di scansioni/poll all’unload.",
+        "es": "Añade un escaneo Unit-ID robusto: resumen debug por Unit-ID comprobado, manejo de timeout/error por unidad, continuación tras IDs sin respuesta y cancelación limpia de scans/polls al unload.",
+        "pl": "Dodaje odporne skanowanie Unit-ID: podsumowanie debug dla każdego Unit-ID, obsługa timeoutów/błędów per unit, kontynuacja po nieodpowiadających ID i czyste przerwanie skanów/polli przy unload.",
+        "uk": "Додано надійне сканування Unit-ID: debug-зведення для кожного Unit-ID, обробка тайм-аутів/помилок, продовження після ID без відповіді та чисте скасування scans/polls під час unload.",
+        "zh-cn": "新增稳健的 Unit-ID 扫描处理：每个 Unit-ID 的调试摘要、按 Unit-ID 处理超时/错误、无响应 ID 后继续扫描，并在适配器卸载时干净取消扫描/轮询。"
+      },
       "0.6.7": {
         "en": "Fixes a crash on successful Modbus TCP connect under Node.js 22 by correcting timer cleanup in the Modbus client.",
         "de": "Behebt einen Absturz nach erfolgreicher Modbus-TCP-Verbindung unter Node.js 22 durch korrigierte Timer-Bereinigung im Modbus-Client.",

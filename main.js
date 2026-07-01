@@ -31,6 +31,7 @@ class VictronHouseControl extends utils.Adapter {
         this.controlByStateId = new Map();
         this.rawPrefix = 'raw.write';
         this.lastValues = new Map();
+        this.isStopping = false;
 
         this.on('ready', () => this.onReady());
         this.on('stateChange', (id, state) => this.onStateChange(id, state));
@@ -132,11 +133,13 @@ class VictronHouseControl extends utils.Adapter {
     }
 
     schedulePolling() {
+        if (this.isStopping) return;
         this.clearTimer('pollTimer');
         this.pollTimer = this.setInterval(() => this.pollOnce(), Math.max(1000, this.config.pollInterval));
     }
 
     scheduleScan() {
+        if (this.isStopping) return;
         this.clearTimer('scanTimer');
         this.scanTimer = this.setInterval(() => this.scanDevices(), Math.max(60000, this.config.scanInterval));
     }
@@ -145,6 +148,36 @@ class VictronHouseControl extends utils.Adapter {
         if (this[name]) {
             this.clearInterval(this[name]);
             this[name] = null;
+        }
+    }
+
+    isShutdownError(error) {
+        const message = String(error && error.message ? error.message : error || '');
+        return this.isStopping || /DB closed|Connection is closed|Modbus connection closed|Adapter is stopping/i.test(message);
+    }
+
+    isUnitTimeoutError(error) {
+        const message = String(error && error.message ? error.message : error || '');
+        return error && (error.code === 'TIMEOUT' || /timeout|timed out|connection closed|ECONNRESET|EHOSTUNREACH|ENETUNREACH|ECONNREFUSED/i.test(message));
+    }
+
+    formatScanError(error) {
+        const message = String(error && error.message ? error.message : error || 'unknown error');
+        const code = error && error.code !== undefined ? `, code=${error.code}` : '';
+        return `${message}${code}`;
+    }
+
+    async safeSetStateAsync(id, value, ack = true) {
+        if (this.isStopping) return false;
+        try {
+            await this.setStateAsync(id, value, ack);
+            return true;
+        } catch (error) {
+            if (this.isShutdownError(error)) {
+                this.log.debug(`State update skipped during shutdown for ${id}: ${error.message}`);
+                return false;
+            }
+            throw error;
         }
     }
 
@@ -759,22 +792,25 @@ class VictronHouseControl extends utils.Adapter {
     }
 
     async pollOnce() {
-        if (this.isPolling || !this.client) return;
+        if (this.isStopping || this.isPolling || !this.client) return;
         this.isPolling = true;
         let successCount = 0;
         try {
             try {
                 await this.client.connect();
             } catch (error) {
-                await this.setStateAsync('info.connection', false, true);
-                await this.setStateAsync('status.lastError', `Connection failed to ${this.config.host}:${this.config.port} - ${error.message}`, true);
+                if (this.isStopping) return;
+                await this.safeSetStateAsync('info.connection', false, true);
+                await this.safeSetStateAsync('status.lastError', `Connection failed to ${this.config.host}:${this.config.port} - ${error.message}`, true);
                 this.log.warn(`Connection failed to ${this.config.host}:${this.config.port}: ${error.message}`);
                 return;
             }
 
+            if (this.isStopping) return;
             this.lastValues.clear();
 
             successCount += await this.readDefinitions(this.config.unitIdSystem, SYSTEM_REGISTERS, 'system');
+            if (this.isStopping) return;
 
             const activeControls = CONTROL_REGISTERS.filter(definition => {
                 if (definition.requiresNewSetpoint && !this.config.useNewSetpoint) return false;
@@ -782,24 +818,32 @@ class VictronHouseControl extends utils.Adapter {
                 return true;
             });
             successCount += await this.readDefinitions(this.config.controlUnitId, activeControls, 'controls');
+            if (this.isStopping) return;
 
             for (const device of this.discoveredDevices.values()) {
+                if (this.isStopping) return;
                 successCount += await this.readDefinitions(device.unitId, device.profile.registers, `devices.unit_${device.unitId}.${device.profile.key}`);
             }
 
+            if (this.isStopping) return;
             await this.updateFlowStates();
+            if (this.isStopping) return;
 
             const connected = successCount > 0;
-            await this.setStateAsync('info.connection', connected, true);
+            await this.safeSetStateAsync('info.connection', connected, true);
             if (connected) {
-                await this.setStateAsync('status.lastPoll', new Date().toISOString(), true);
-                await this.setStateAsync('status.lastError', '', true);
+                await this.safeSetStateAsync('status.lastPoll', new Date().toISOString(), true);
+                await this.safeSetStateAsync('status.lastError', '', true);
             } else {
-                await this.setStateAsync('status.lastError', 'No Modbus registers could be read', true);
+                await this.safeSetStateAsync('status.lastError', 'No Modbus registers could be read', true);
             }
         } catch (error) {
-            await this.setStateAsync('info.connection', false, true);
-            await this.setStateAsync('status.lastError', error.message, true);
+            if (this.isShutdownError(error)) {
+                this.log.debug(`Polling stopped during shutdown: ${error.message}`);
+                return;
+            }
+            await this.safeSetStateAsync('info.connection', false, true);
+            await this.safeSetStateAsync('status.lastError', error.message, true);
             this.log.warn(`Polling error: ${error.message}`);
         } finally {
             this.isPolling = false;
@@ -807,8 +851,10 @@ class VictronHouseControl extends utils.Adapter {
     }
 
     async readDefinitions(unitId, definitions, prefix) {
+        if (this.isStopping) return 0;
         let count = 0;
         for (const group of this.groupDefinitions(definitions)) {
+            if (this.isStopping) break;
             if (group.length === 1) {
                 if (await this.readDefinition(unitId, group[0], `${prefix}.${group[0].id}`)) count++;
                 continue;
@@ -837,6 +883,43 @@ class VictronHouseControl extends utils.Adapter {
         }
         if (group.length) groups.push(group);
         return groups;
+    }
+
+    async readDefinitionGroup(unitId, group, prefix) {
+        if (this.isStopping) return 0;
+        const start = group[0].address;
+        const end = group.reduce((max, definition) => Math.max(max, definition.address + getRegisterLength(definition.type)), start);
+        const quantity = end - start;
+        try {
+            const registers = await this.client.readHoldingRegisters(unitId, start, quantity);
+            let count = 0;
+            for (const definition of group) {
+                if (this.isStopping) return count;
+                const offset = definition.address - start;
+                const length = getRegisterLength(definition.type);
+                const slice = registers.slice(offset, offset + length);
+                const value = decodeRegisters(slice, definition.type, definition.scale, definition.boolean);
+                if (value !== null && value !== undefined) {
+                    const objectId = `${prefix}.${definition.id}`;
+                    await this.safeSetStateAsync(objectId, value, true);
+                    this.lastValues.set(objectId, value);
+                    count++;
+                }
+            }
+            return count;
+        } catch (error) {
+            if (this.isShutdownError(error)) {
+                this.log.debug(`Grouped read stopped during shutdown unit=${unitId} address=${start}: ${error.message}`);
+                return 0;
+            }
+            this.log.debug(`Grouped read failed unit=${unitId} address=${start} quantity=${quantity}: ${error.message}`);
+            let count = 0;
+            for (const definition of group) {
+                if (this.isStopping) break;
+                if (await this.readDefinition(unitId, definition, `${prefix}.${definition.id}`)) count++;
+            }
+            return count;
+        }
     }
 
     async readDefinitionGroup(unitId, group, prefix) {
@@ -870,15 +953,21 @@ class VictronHouseControl extends utils.Adapter {
     }
 
     async readDefinition(unitId, definition, objectId) {
+        if (this.isStopping) return false;
         try {
             const registers = await this.client.readHoldingRegisters(unitId, definition.address, getRegisterLength(definition.type));
+            if (this.isStopping) return false;
             const value = decodeRegisters(registers, definition.type, definition.scale, definition.boolean);
             if (value !== null && value !== undefined) {
-                await this.setStateAsync(objectId, value, true);
+                await this.safeSetStateAsync(objectId, value, true);
                 this.lastValues.set(objectId, value);
                 return true;
             }
         } catch (error) {
+            if (this.isShutdownError(error)) {
+                this.log.debug(`Read stopped during shutdown unit=${unitId} address=${definition.address}: ${error.message}`);
+                return false;
+            }
             this.log.debug(`Read failed unit=${unitId} address=${definition.address}: ${error.message}`);
         }
         return false;
@@ -906,11 +995,12 @@ class VictronHouseControl extends utils.Adapter {
             return found ? total : undefined;
         };
         const setFlow = async (id, val) => {
+            if (this.isStopping) return;
             if (Number.isFinite(val)) {
-                await this.setStateAsync(`flow.${id}`, Number.isInteger(val) ? val : Number(val.toFixed(3)), true);
+                await this.safeSetStateAsync(`flow.${id}`, Number.isInteger(val) ? val : Number(val.toFixed(3)), true);
             } else {
                 // Avoid keeping obsolete calculated values in Lovelace after a mapping change.
-                await this.setStateAsync(`flow.${id}`, null, true);
+                await this.safeSetStateAsync(`flow.${id}`, null, true);
             }
         };
 
@@ -1060,6 +1150,7 @@ class VictronHouseControl extends utils.Adapter {
         await setFlow('genset_total', gensetTotal);
         await setFlow('inverter_charger_power', inverterChargerPower);
 
+        if (this.isStopping) return;
         await this.updateDashboardSnapshot({
             gridTotal, gridL1: first('grid_l1_32', 'grid_l1'), gridL2: first('grid_l2_32', 'grid_l2'), gridL3: first('grid_l3_32', 'grid_l3'),
             acConsumptionTotal,
@@ -1263,11 +1354,14 @@ class VictronHouseControl extends utils.Adapter {
             sources: this.currentLoadSourceInfo || {}
         };
 
+        if (this.isStopping) return;
         await this.updateViewStates(snapshot);
+        if (this.isStopping) return;
 
         const setDashboard = async (id, value) => {
+            if (this.isStopping) return;
             if (value === undefined) value = null;
-            await this.setStateAsync(`dashboard.${id}`, value, true);
+            await this.safeSetStateAsync(`dashboard.${id}`, value, true);
         };
 
         await setDashboard('grid_total', snapshot.grid.total);
@@ -1299,7 +1393,7 @@ class VictronHouseControl extends utils.Adapter {
         await setDashboard('battery_temperature', snapshot.battery.temperature);
         await setDashboard('battery_status', snapshot.battery.status);
         await setDashboard('surplus', snapshot.surplus);
-        await this.setStateAsync('dashboard.snapshot_json', JSON.stringify(snapshot), true);
+        await this.safeSetStateAsync('dashboard.snapshot_json', JSON.stringify(snapshot), true);
         // Commit signal for Lovelace live cards. Must be written after all values and snapshot.
         await setDashboard('last_update_ms', snapshot.timestampMs);
     }
@@ -1333,8 +1427,9 @@ class VictronHouseControl extends utils.Adapter {
         };
 
         const setView = async (id, value) => {
+            if (this.isStopping) return;
             if (value === undefined) value = null;
-            await this.setStateAsync(`view.${id}`, value, true);
+            await this.safeSetStateAsync(`view.${id}`, value, true);
         };
 
         await setView('grid_total', ui.grid && ui.grid.total);
@@ -1382,31 +1477,82 @@ class VictronHouseControl extends utils.Adapter {
     }
 
     async scanDevices() {
-        if (this.isScanning || !this.client) return;
+        if (this.isStopping || this.isScanning || !this.client) return;
         this.isScanning = true;
+        const started = Date.now();
+        let checkedUnits = 0;
         try {
             const candidates = this.buildScanCandidates();
             let added = 0;
+            this.log.debug(`Device scan started: checking ${candidates.length} Unit-ID(s): ${candidates.join(', ')}`);
 
             for (const unitId of candidates) {
-                for (const profile of DEVICE_PROFILES) {
-                    const key = `${unitId}.${profile.key}`;
-                    if (this.discoveredDevices.has(key)) continue;
-                    const detected = await this.probeProfile(unitId, profile);
-                    if (detected) {
-                        await this.createDeviceProfile(unitId, profile);
-                        this.discoveredDevices.set(key, { unitId, profile });
-                        added++;
-                        this.log.info(`Detected Victron ${profile.name} at Unit-ID ${unitId}`);
+                if (this.isStopping) break;
+                checkedUnits++;
+                const unitStarted = Date.now();
+                let foundForUnit = 0;
+                const errors = [];
+                this.log.debug(`Scan Unit-ID ${unitId}: checking profiles`);
+
+                try {
+                    for (const profile of DEVICE_PROFILES) {
+                        if (this.isStopping) break;
+                        const key = `${unitId}.${profile.key}`;
+                        if (this.discoveredDevices.has(key)) continue;
+
+                        const result = await this.probeProfile(unitId, profile);
+                        if (this.isStopping) break;
+
+                        if (result.detected) {
+                            await this.createDeviceProfile(unitId, profile);
+                            if (this.isStopping) break;
+                            this.discoveredDevices.set(key, { unitId, profile });
+                            added++;
+                            foundForUnit++;
+                            this.log.info(`Detected Victron ${profile.name} at Unit-ID ${unitId}`);
+                            continue;
+                        }
+
+                        if (result.error) {
+                            errors.push(`${profile.key}: ${this.formatScanError(result.error)}`);
+                            if (this.isUnitTimeoutError(result.error)) {
+                                this.log.debug(`Scan Unit-ID ${unitId}: ${this.formatScanError(result.error)}; continuing with next Unit-ID`);
+                                break;
+                            }
+                        }
                     }
+                } catch (error) {
+                    if (this.isShutdownError(error)) break;
+                    errors.push(`unexpected: ${this.formatScanError(error)}`);
+                    this.log.debug(`Scan Unit-ID ${unitId}: unexpected error ${this.formatScanError(error)}; continuing with next Unit-ID`);
+                }
+
+                if (this.isStopping) break;
+                if (foundForUnit > 0) {
+                    this.log.debug(`Scan Unit-ID ${unitId}: finished, detected ${foundForUnit} profile(s) in ${Date.now() - unitStarted} ms`);
+                } else if (errors.length > 0) {
+                    const uniqueErrors = Array.from(new Set(errors)).slice(0, 4).join('; ');
+                    this.log.debug(`Scan Unit-ID ${unitId}: no matching profile detected in ${Date.now() - unitStarted} ms; ${uniqueErrors}`);
+                } else {
+                    this.log.debug(`Scan Unit-ID ${unitId}: no matching profile detected in ${Date.now() - unitStarted} ms`);
                 }
             }
 
-            await this.setStateAsync('status.discoveredCount', this.discoveredDevices.size, true);
+            if (this.isStopping) {
+                this.log.debug(`Device scan stopped during shutdown after ${checkedUnits} Unit-ID(s)`);
+                return;
+            }
+
+            await this.safeSetStateAsync('status.discoveredCount', this.discoveredDevices.size, true);
             if (added > 0) {
                 await this.pollOnce();
             }
+            this.log.debug(`Device scan finished: checked ${checkedUnits}/${candidates.length} Unit-ID(s), added ${added} profile(s) in ${Date.now() - started} ms`);
         } catch (error) {
+            if (this.isShutdownError(error)) {
+                this.log.debug(`Device scan stopped during shutdown: ${error.message}`);
+                return;
+            }
             this.log.warn(`Device scan failed: ${error.message}`);
         } finally {
             this.isScanning = false;
@@ -1446,22 +1592,25 @@ class VictronHouseControl extends utils.Adapter {
     }
 
     async probeProfile(unitId, profile) {
+        if (this.isStopping) return { detected: false, stopped: true };
         try {
             const probe = profile.probe;
             await this.client.readHoldingRegisters(unitId, probe.address, getRegisterLength(probe.type));
-            return true;
+            return { detected: true };
         } catch (error) {
-            this.log.debug(`Probe failed unit=${unitId} profile=${profile.key}: ${error.message}`);
-            return false;
+            return { detected: false, error };
         }
     }
 
     async createDeviceProfile(unitId, profile) {
+        if (this.isStopping) return;
         const unitChannel = `devices.unit_${unitId}`;
         const profileChannel = `${unitChannel}.${profile.key}`;
         await this.ensureChannelObject(unitChannel, `Victron Gerät Unit-ID ${unitId}`, `Automatisch erkannter Victron-Dienst mit Modbus Unit-ID ${unitId}.`, { unitId });
+        if (this.isStopping) return;
         await this.ensureChannelObject(profileChannel, profile.name, `Automatisch erkanntes Victron-Profil: ${profile.name}.`, { unitId, profile: profile.key });
         for (const definition of profile.registers) {
+            if (this.isStopping) return;
             await this.ensureStateObject(`${profileChannel}.${definition.id}`, definition, false, {
                 unitId,
                 address: definition.address,
@@ -1548,12 +1697,14 @@ class VictronHouseControl extends utils.Adapter {
 
     onUnload(callback) {
         try {
+            this.isStopping = true;
             this.clearTimer('pollTimer');
             this.clearTimer('scanTimer');
             if (this.client) {
                 this.client.destroy();
                 this.client = null;
             }
+            this.log.debug('Adapter unload requested: active polls/scans will stop without further state writes.');
             callback();
         } catch (error) {
             callback();
