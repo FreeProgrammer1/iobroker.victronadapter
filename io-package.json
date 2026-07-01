@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "victronadapter",
-    "version": "0.6.9",
+    "version": "0.6.10",
     "titleLang": {
       "en": "Victron",
       "de": "Victron",
@@ -68,6 +68,19 @@
       }
     ],
     "news": {
+      "0.6.10": {
+        "en": "Fixes repository checker issues from 0.6.9: removes the premature release-script dependency, fixes jsonConfig root attributes and documents old changelog linkage.",
+        "de": "Behebt Repository-Checker-Probleme aus 0.6.9: entfernt die verfrühte release-script-Abhängigkeit, korrigiert jsonConfig-Root-Attribute und dokumentiert die Verknüpfung zum alten Changelog.",
+        "ru": "Исправлены проблемы проверки репозитория из 0.6.9: удалена преждевременная зависимость release-script, исправлены корневые атрибуты jsonConfig и добавлена ссылка на старый changelog.",
+        "pt": "Corrige problemas do checker da versão 0.6.9: remove a dependência release-script prematura, corrige atributos raiz do jsonConfig e documenta o link para o changelog antigo.",
+        "nl": "Verhelpt repository-checkerproblemen uit 0.6.9: verwijdert de voortijdige release-script-afhankelijkheid, corrigeert jsonConfig-rootattributen en documenteert de link naar de oude changelog.",
+        "fr": "Corrige les problèmes du checker de la version 0.6.9 : supprime la dépendance release-script prématurée, corrige les attributs racine jsonConfig et documente le lien vers l’ancien changelog.",
+        "it": "Corregge i problemi del checker della versione 0.6.9: rimuove la dipendenza release-script prematura, corregge gli attributi root di jsonConfig e documenta il link al vecchio changelog.",
+        "es": "Corrige problemas del checker de la versión 0.6.9: elimina la dependencia release-script prematura, corrige atributos raíz de jsonConfig y documenta el enlace al changelog antiguo.",
+        "pl": "Naprawia problemy checkera z 0.6.9: usuwa przedwczesną zależność release-script, poprawia atrybuty root w jsonConfig i dokumentuje link do starego changeloga.",
+        "uk": "Виправлено проблеми перевірки репозиторію з 0.6.9: видалено передчасну залежність release-script, виправлено кореневі атрибути jsonConfig і додано посилання на старий changelog.",
+        "zh-cn": "修复 0.6.9 的仓库检查问题：移除过早添加的 release-script 依赖，修正 jsonConfig 根属性，并记录旧 changelog 链接。"
+      },
       "0.6.9": {
         "en": "Fixes checker compatibility: adds responsive jsonConfig sizes, documents the current release in the README changelog and keeps the robust scan/shutdown handling.",
         "de": "Verbessert die Checker-Kompatibilität: ergänzt responsive jsonConfig-Größen, dokumentiert die aktuelle Version im README-Changelog und behält die robuste Scan-/Shutdown-Behandlung bei.",

@@ -103,6 +103,13 @@ The `adapter-check` script checks npm and the official ioBroker repositories. It
 
 ## Changelog
 
+### 0.6.10
+
+- Removed `@alcalzone/release-script` again because the checker requires additional release configuration when it is used.
+- Removed invalid root-level `xs`, `md`, `lg` and `xl` attributes from `admin/jsonConfig.json`; responsive sizes remain on the actual Admin fields.
+- Added a link to `CHANGELOG_OLD.md` for repositories where the old changelog file still exists.
+- Kept the robust Unit-ID scan handling and clean poll/scan shutdown from 0.6.8.
+
 ### 0.6.9
 
 - Added responsive `xs`, `md`, `lg` and `xl` size attributes to all Admin `jsonConfig` items.
@@ -119,6 +126,8 @@ The `adapter-check` script checks npm and the official ioBroker repositories. It
 ### 0.6.7
 
 - Fixed the Modbus TCP connect crash under Node.js 22 by correcting timer cleanup in the Modbus client.
+
+Older entries are kept in [CHANGELOG_OLD.md](CHANGELOG_OLD.md) when this file exists in the repository.
 
 ## License
 

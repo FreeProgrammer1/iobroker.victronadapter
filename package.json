@@ -1,6 +1,6 @@
 {
   "name": "iobroker.victronadapter",
-  "version": "0.6.9",
+  "version": "0.6.10",
   "description": "ioBroker adapter for Victron GX and Cerbo GX systems via Modbus TCP with checker-compatible admin layout and robust scan handling.",
   "author": "FreeProgrammer1",
   "license": "MIT",
@@ -36,8 +36,7 @@
     "test:unit": "node --test test/*.test.js",
     "test:package": "npm pack --dry-run",
     "lint": "eslint .",
-    "adapter-check": "npx --yes @iobroker/repochecker https://github.com/FreeProgrammer1/ioBroker.victronadapter --local",
-    "release": "release-script"
+    "adapter-check": "npx --yes @iobroker/repochecker https://github.com/FreeProgrammer1/ioBroker.victronadapter --local"
   },
   "dependencies": {
     "@iobroker/adapter-core": "^3.4.1"
@@ -47,8 +46,7 @@
     "@iobroker/eslint-config": "^2.3.4",
     "@iobroker/testing": "^5.2.2",
     "@tsconfig/node22": "^22.0.5",
-    "@types/node": "^22.0.0",
-    "@alcalzone/release-script": "^3.8.0"
+    "@types/node": "^22.0.0"
   },
   "files": [
     "admin",
@@ -60,6 +58,7 @@
     "package.json",
     "README.md",
     "CHANGELOG.md",
+    "CHANGELOG_OLD.md",
     "LICENSE",
     "tsconfig.json",
     "eslint.config.mjs",
